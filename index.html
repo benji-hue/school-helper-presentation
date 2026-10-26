@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Школьный помощник</title>
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="scenes.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="glyph" viewBox="0 0 100 100">
+    <path d="M14 42c11-5 23-5 33 2v40c-10-6-22-6-33-2z"/>
+    <path d="M86 42c-11-5-23-5-33 2v40c10-6 22-6 33-2z"/>
+    <path d="M50 10l3.2 9L62 22.2l-8.8 3.2L50 34.4l-3.2-9L38 22.2l8.8-3.2z"/>
+  </symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-2-8-1.5v14c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5v-14c-3-.5-6 0-8 1.5zM12 6v14"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 15l.7 1.8 1.8.7-1.8.7L19 20l-.7-1.8-1.8-.7 1.8-.7z"/></symbol>
+  <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></symbol>
+  <symbol id="i-quiz" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5v.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+  <symbol id="i-plan" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 6l-3 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.5-3.2 8.2-7.5 9.5-4.3-1.3-7.5-5-7.5-9.5V6z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1-3.5 3.8-5.5 7-5.5s6 2 7 5.5"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.5h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.6 9.1 4.75 4.75 0 0 0 7 18.5z"/></symbol>
+  <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3L3 10.5l7 2.5 2.5 7zM21 3L10 13"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4.5 13.5H11L10 22l8.5-11.5H12z"/></symbol>
+  <symbol id="i-museum" viewBox="0 0 24 24"><path d="M3 9.5L12 4l9 5.5M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20.5h18"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+</svg>
+
+<main class="viewport" id="viewport">
+<div class="stage" id="stage" data-mode="intro">
+
+  <!-- Сквозные объекты: живут на всех слайдах и «перетекают» между ними -->
+  <div class="grid-paper"></div>
+  <div class="flood"></div>
+  <div class="grid-night"></div>
+  <div class="ambient"></div>
+
+  <svg class="ring" style="--n:1" viewBox="0 0 240 240" aria-hidden="true"><rect x="1" y="1" width="238" height="238" rx="52"/></svg>
+  <svg class="ring" style="--n:2" viewBox="0 0 240 240" aria-hidden="true"><rect x="1" y="1" width="238" height="238" rx="52"/></svg>
+  <svg class="ring" style="--n:3" viewBox="0 0 240 240" aria-hidden="true"><rect x="1" y="1" width="238" height="238" rx="52"/></svg>
+  <svg class="ring" style="--n:4" viewBox="0 0 240 240" aria-hidden="true"><rect x="1" y="1" width="238" height="238" rx="52"/></svg>
+
+  <svg class="orb" viewBox="0 0 2000 2000" aria-hidden="true">
+    <defs>
+      <radialGradient id="orbFill" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0.6" stop-color="#fff" stop-opacity="0"/>
+        <stop offset="1" stop-color="#fff" stop-opacity="0.045"/>
+      </radialGradient>
+    </defs>
+    <circle cx="1000" cy="1000" r="999" fill="url(#orbFill)"/>
+  </svg>
+
+  <div class="logo" aria-hidden="true"><svg><use href="#glyph"/></svg></div>
+
+  <div class="wheel" id="wheel">
+    <button class="witem" data-k="0"><span><em>01</em>Проблема</span></button>
+    <button class="witem" data-k="1"><span><em>02</em>Цель и гипотеза</span></button>
+    <button class="witem" data-k="2"><span><em>03</em>Этапы</span></button>
+    <button class="witem" data-k="3"><span><em>04</em>Возможности</span></button>
+    <button class="witem" data-k="4"><span><em>05</em>История рядом</span></button>
+    <button class="witem" data-k="5"><span><em>06</em>Облако</span></button>
+    <button class="witem" data-k="6"><span><em>07</em>Проверка</span></button>
+    <button class="witem" data-k="7"><span><em>08</em>Защита данных</span></button>
+    <button class="witem" data-k="8"><span><em>09</em>Развитие</span></button>
+  </div>
+  <div class="needle" aria-hidden="true"></div>
+
+  <!-- ===== 0. Заставка ===== -->
+  <section class="scene" data-mode="intro" aria-label="Заставка">
+    <p class="intro-school fx fx-fade" style="--d:1">ГУО «Средняя школа п. Мухавец»</p>
+    <p class="intro-name fx fx-up" style="--d:2">Школьный помощник</p>
+    <p class="intro-hint fx fx-fade" style="--d:5"><kbd>→</kbd> или <kbd>пробел</kbd> — начать · <kbd>F</kbd> — полный экран</p>
+  </section>
+
+  <!-- ===== 1. Титул ===== -->
+  <section class="scene" data-mode="title" aria-label="Титульный слайд">
+    <div class="title-wrap">
+      <div class="t-kicker fx fx-fly" style="--d:0">
+        <span>ГУО «Средняя школа п. Мухавец»</span><i class="rule fx fx-line" style="--d:4"></i>
+      </div>
+      <h1 class="t-h1">
+        <span class="fx fx-fly" style="--d:1">Школьный</span>
+        <span class="fx fx-fly" style="--d:2">помощник</span>
+      </h1>
+      <p class="t-sub fx fx-fly" style="--d:3">Telegram-бот с ИИ для учёбы, личных дел и&nbsp;школьной информации</p>
+      <div class="t-foot">
+        <div class="t-author fx fx-fly" style="--d:4"><b>Якушевич Арсений</b><span>Исследовательская работа</span></div>
+        <div class="t-chip fx fx-fly" style="--d:5"><svg><use href="#i-send"/></svg>@school_qwen_helper_26_bot</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 2. Содержание ===== -->
+  <section class="scene" data-mode="outline" aria-label="Содержание">
+    <div class="ol-wrap">
+      <p class="kicker fx fx-fly" style="--d:0">Школьный помощник</p>
+      <h2 class="ol-h fx fx-fly" style="--d:1">Содержание</h2>
+      <p class="ol-sub fx fx-fly" style="--d:2">9 разделов: от проблемы до облачной версии</p>
+      <i class="rule fx fx-line" style="--d:3"></i>
+    </div>
+  </section>
+
+  <!-- ===== 3. Проблема ===== -->
+  <section class="scene" data-mode="section" data-k="0" aria-label="Проблема">
+    <div class="sec">
+      <p class="kicker fx fx-fly" style="--d:0">01 · Проблема</p>
+      <h2 class="h2 fx fx-fly" style="--d:1">Где найти нужную информацию?</h2>
+      <div class="cols">
+        <div>
+          <p class="lead fx fx-fly" style="--d:2">Расписание, домашние задания и&nbsp;справочные материалы лежат в&nbsp;разных местах. Ученик тратит время на&nbsp;поиск.</p>
+          <p class="task fx fx-up" style="--d:5"><span>Задача проекта</span>Объединить доступ к&nbsp;школьной информации в&nbsp;одном месте</p>
+        </div>
+        <div class="gather fx fx-fade" style="--d:1">
+          <div class="gather-frame"><svg><use href="#glyph"/></svg>Школьный помощник</div>
+          <div class="gchip" style="--sx:-120px;--sy:-150px;--sr:-11deg;--j:0"><svg><use href="#i-cal"/></svg>Расписание</div>
+          <div class="gchip" style="--sx:150px;--sy:10px;--sr:8deg;--j:1"><svg><use href="#i-book"/></svg>Домашние задания</div>
+          <div class="gchip" style="--sx:-60px;--sy:170px;--sr:-5deg;--j:2"><svg><use href="#i-info"/></svg>Справочные материалы</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. Цель и гипотеза ===== -->
+  <section class="scene" data-mode="section" data-k="1" aria-label="Цель и гипотеза">
+    <div class="sec">
+      <p class="kicker fx fx-fly" style="--d:0">02 · Цель и гипотеза</p>
+      <div class="gh">
+        <p class="gh-label fx fx-fly" style="--d:1">Цель</p>
+        <p class="gh-goal fx fx-fly" style="--d:2">Оценить возможности и&nbsp;ограничения Telegram-бота</p>
+        <i class="rule fx fx-line" style="--d:3"></i>
+        <p class="gh-label fx fx-fly" style="--d:4">Гипотеза</p>
+        <p class="gh-hyp fx fx-fly" style="--d:5">Telegram-бот может <mark>объединить</mark> информацию и&nbsp;инструменты для&nbsp;учёбы</p>
+        <p class="note fx fx-up" style="--d:7">Условия: актуальные данные, работа в&nbsp;облаке и&nbsp;проверка ответов ИИ</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. Этапы ===== -->
+  <section class="scene" data-mode="section" data-k="2" aria-label="Этапы исследования">
+    <div class="sec">
+      <p class="kicker fx fx-fly" style="--d:0">03 · Этапы исследования</p>
+      <h2 class="h2 fx fx-fly" style="--d:1">Как шла работа</h2>
+      <div class="steps">
+        <i class="steps-line fx fx-line" style="--d:2"></i>
+        <div class="step fx fx-up" style="--d:3"><span class="step-dot"></span><svg><use href="#i-search"/></svg><b>Анализ</b><span>Задачи ученика</span></div>
+        <div class="step fx fx-up" style="--d:5"><span class="step-dot"></span><svg><use href="#i-plan"/></svg><b>Проектирование</b><span>Функции и данные</span></div>
+        <div class="step fx fx-up" style="--d:7"><span class="step-dot"></span><svg><use href="#i-code"/></svg><b>Разработка</b><span>Логика бота</span></div>
+        <div class="step fx fx-up" style="--d:9"><span class="step-dot"></span><svg><use href="#i-check"/></svg><b>Проверка</b><span>Сценарии работы</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 6. Помощник в действии ===== -->
+  <section class="scene" data-mode="section" data-k="3" aria-label="Помощник в действии">
+    <div class="sec sec-split">
+      <div class="split-l">
+        <p class="kicker fx fx-fly" style="--d:0">04 · Помощник в действии</p>
+        <h2 class="h2 h2-s fx fx-fly" style="--d:1">Ученик спрашивает, бот&nbsp;объясняет</h2>
+        <ul class="feats">
+          <li class="fx fx-fly" style="--d:2"><svg><use href="#i-spark"/></svg><div><b>Учёба с ИИ</b><span>Объяснит тему, разберёт задачу по&nbsp;шагам</span><code>/explain /steps /practice</code></div></li>
+          <li class="fx fx-fly" style="--d:3"><svg><use href="#i-cal"/></svg><div><b>Расписание и ДЗ</b><span>Уроки на&nbsp;сегодня и&nbsp;неделю, звонки</span><code>/today /week /bell /hw</code></div></li>
+          <li class="fx fx-fly" style="--d:4"><svg><use href="#i-timer"/></svg><div><b>Дела и фокус-таймер</b><span>Список задач и&nbsp;утренние напоминания</span><code>/todo /focus /subscribe</code></div></li>
+          <li class="fx fx-fly" style="--d:5"><svg><use href="#i-quiz"/></svg><div><b>Викторины и прогресс</b><span>Игровые очки и&nbsp;уровни, а&nbsp;не&nbsp;оценки</span><code>/quiz /progress</code></div></li>
+        </ul>
+      </div>
+      <div class="phone fx fx-card" style="--d:2">
+        <div class="ph-head"><img src="img/avatar.jpg" alt=""><div><b>Школьный помощник ИИ</b><span>бот</span></div></div>
+        <div class="ph-chat">
+          <div class="msg me" style="--at:.9s"><p>/explain Теорема Пифагора</p></div>
+          <div class="msg bot" style="--at:2.4s"><i class="typing"><b></b><b></b><b></b></i><p><em>Объяснение</em>В прямоугольном треугольнике квадрат гипотенузы равен сумме квадратов катетов.</p></div>
+          <div class="msg bot" style="--at:3.2s"><p><em>Формула</em><span class="formula">c² = a² + b²</span></p></div>
+          <div class="msg bot" style="--at:4s"><p><em>Пример</em>3² + 4² = 9 + 16 = 25 = 5², значит c&nbsp;=&nbsp;5</p></div>
+          <div class="msg bot" style="--at:4.8s"><p><em>Проверь себя</em>Катеты 5 и&nbsp;12. Чему равна <mark>гипотенуза</mark>?</p></div>
+        </div>
+        <div class="ph-keys"><span>/today</span><span>/todo</span><span>/quiz</span></div>
+      </div>
+    </div>
+    <p class="foot-note fx fx-fade" style="--d:6">Диалог повторяет структуру ответа бота: объяснение, формула, пример, вопрос. Расписание в&nbsp;боте демонстрационное.</p>
+  </section>
+
+  <!-- ===== 7. История рядом ===== -->
+  <section class="scene" data-mode="section" data-k="4" aria-label="История рядом">
+    <div class="sec sec-split">
+      <div class="split-l">
+        <p class="kicker fx fx-fly" style="--d:0">05 · История рядом</p>
+        <h2 class="h2 h2-s fx fx-fly" style="--d:1">Школьный музей и&nbsp;памятники Мухавца</h2>
+        <p class="lead fx fx-fly" style="--d:2">Онлайн-экспозиция школьного музея и&nbsp;маршрут памяти по&nbsp;посёлку прямо в&nbsp;боте.</p>
+        <div class="cmd-list">
+          <div class="fx fx-fly" style="--d:3"><code>/museum</code><span>экспозиция, стенд «Помним», 3D-прогулка</span></div>
+          <div class="fx fx-fly" style="--d:4"><code>/monuments</code><span>памятники и&nbsp;весь маршрут памяти</span></div>
+        </div>
+      </div>
+      <div class="museum">
+        <figure class="m-main fx fx-card" style="--d:2"><img src="img/museum.jpg" alt="Школьный музей"></figure>
+        <figure class="m-th m-th1 fx fx-card" style="--d:4"><img src="img/monument1.jpg" alt=""><figcaption>Памятник Сергею Богданчуку</figcaption></figure>
+        <figure class="m-th m-th2 fx fx-card" style="--d:5"><img src="img/monument2.jpg" alt=""><figcaption>Памятник землякам</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 8. Облако ===== -->
+  <section class="scene" data-mode="section" data-k="5" aria-label="Бот работает в облаке">
+    <div class="sec">
+      <p class="kicker fx fx-fly" style="--d:0">06 · Как это работает</p>
+      <h2 class="h2 fx fx-fly" style="--d:1">Бот работает в&nbsp;облаке</h2>
+      <div class="arch">
+        <svg class="arch-lines" viewBox="0 0 960 430" aria-hidden="true">
+          <path class="draw" style="--d:3" pathLength="1" d="M220 215H330"/>
+          <path class="draw" style="--d:5" pathLength="1" d="M590 215C650 215 660 60 720 60"/>
+          <path class="draw" style="--d:6" pathLength="1" d="M590 215H720"/>
+          <path class="draw" style="--d:7" pathLength="1" d="M590 215C650 215 660 370 720 370"/>
+        </svg>
+        <i class="pulse" style="--k:0;offset-path:path('M220 215H330')"></i>
+        <i class="pulse" style="--k:1;offset-path:path('M590 215C650 215 660 60 720 60')"></i>
+        <i class="pulse" style="--k:2;offset-path:path('M590 215H720')"></i>
+        <i class="pulse" style="--k:3;offset-path:path('M590 215C650 215 660 370 720 370')"></i>
+        <div class="node fx fx-pop" style="--d:2;left:0;top:160px;width:220px"><svg><use href="#i-user"/></svg><b>Ученик</b><span>Telegram</span></div>
+        <div class="node node-main fx fx-pop" style="--d:4;left:330px;top:150px;width:260px;height:130px"><svg><use href="#i-bolt"/></svg><b>Обработчик</b><span>Cloudflare Workers</span></div>
+        <div class="node fx fx-pop" style="--d:6;left:720px;top:5px"><svg><use href="#i-db"/></svg><b>База D1</b><span>прогресс и дела</span></div>
+        <div class="node fx fx-pop" style="--d:7;left:720px;top:160px"><svg><use href="#i-spark"/></svg><b>Workers AI</b><span>объяснения тем</span></div>
+        <div class="node fx fx-pop" style="--d:8;left:720px;top:315px"><svg><use href="#i-clock"/></svg><b>Cron</b><span>напоминания</span></div>
+      </div>
+      <p class="callout fx fx-up" style="--d:9"><svg><use href="#i-cloud"/></svg>Компьютер автора можно выключить, а&nbsp;бот продолжит отвечать</p>
+    </div>
+  </section>
+
+  <!-- ===== 9. Проверка ===== -->
+  <section class="scene" data-mode="section" data-k="6" aria-label="Техническая проверка">
+    <div class="sec">
+      <p class="kicker fx fx-fly" style="--d:0">07 · Техническая проверка</p>
+      <h2 class="h2 fx fx-fly" style="--d:1">Что уже работает</h2>
+      <ul class="checks">
+        <li class="fx fx-fly" style="--d:2"><svg class="ck" viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg><div>Данные сохраняются<small>Прогресс, дела и&nbsp;подписки на&nbsp;напоминания</small></div></li>
+        <li class="fx fx-fly is-accent" style="--d:4"><svg class="ck" viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg><div>Доступ разграничен<small>Личные данные видит только владелец, ДЗ меняет учитель</small></div></li>
+        <li class="fx fx-fly" style="--d:6"><svg class="ck" viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg><div>ИИ отвечает на&nbsp;вопросы<small>Объяснение, формула, пример и&nbsp;вопрос для&nbsp;самопроверки</small></div></li>
+      </ul>
+      <p class="note fx fx-up" style="--d:8">Проверены сценарии работы. Образовательный эффект требует апробации.</p>
+    </div>
+  </section>
+
+  <!-- ===== 10. Защита данных ===== -->
+  <section class="scene" data-mode="section" data-k="7" aria-label="Ограничения и защита данных">
+    <div class="sec sec-split">
+      <div class="split-l">
+        <p class="kicker fx fx-fly" style="--d:0">08 · Ограничения и защита</p>
+        <h2 class="h2 h2-s fx fx-fly" style="--d:1">Честно об&nbsp;ограничениях</h2>
+        <div class="limits">
+          <div class="limit fx fx-fly" style="--d:2"><b>Ответы ИИ нужно проверять</b><span>Языковая модель может ошибаться</span></div>
+          <div class="limit fx fx-fly" style="--d:3"><b>Школьные данные нужно обновлять</b><span>Расписание и задания должны быть актуальными</span></div>
+        </div>
+        <p class="note fx fx-up" style="--d:6">Нужны интернет и&nbsp;доступные облачные сервисы</p>
+      </div>
+      <div class="term fx fx-card" style="--d:3">
+        <div class="term-head"><svg><use href="#i-shield"/></svg>Данные под контролем ученика</div>
+        <div class="term-row" style="--j:0"><code>/privacy</code><span>что хранит бот</span></div>
+        <div class="term-row" style="--j:1"><code>/reset</code><span>очистить диалог с&nbsp;ИИ</span></div>
+        <div class="term-row" style="--j:2"><code>/delete_me</code><span>удалить профиль</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 11. Развитие ===== -->
+  <section class="scene" data-mode="section" data-k="8" aria-label="Развитие реализации">
+    <div class="sec">
+      <p class="kicker fx fx-fly" style="--d:0">09 · Развитие реализации</p>
+      <h2 class="h2 fx fx-fly" style="--d:1">От прототипа к&nbsp;облаку</h2>
+      <div class="evo">
+        <div class="evo-card is-old fx fx-card" style="--d:2"><p class="evo-tag">Раннее описание</p><ul><li>Python и aiogram</li><li>JSON-файлы</li><li>Фоновый цикл напоминаний</li></ul></div>
+        <div class="evo-arrow"><i class="fx fx-line" style="--d:4"></i><svg class="fx fx-fade" style="--d:5"><use href="#i-arrow"/></svg></div>
+        <div class="evo-card is-new fx fx-card" style="--d:5"><p class="evo-tag">Облачная версия</p><ul><li>JavaScript и Telegram Bot API</li><li>Облачная база данных</li><li>Планировщик и помощь ИИ</li></ul></div>
+      </div>
+      <p class="note fx fx-up" style="--d:7">На защите демонстрируется текущая облачная версия</p>
+    </div>
+  </section>
+
+  <!-- ===== 12. Вывод ===== -->
+  <section class="scene" data-mode="final" aria-label="Вывод">
+    <div class="title-wrap">
+      <p class="kicker fx fx-fly" style="--d:0">Вывод</p>
+      <h2 class="fin-h">
+        <span class="fx fx-fly" style="--d:1">Работающий</span>
+        <span class="fx fx-fly" style="--d:2">помощник</span>
+        <span class="fx fx-fly" style="--d:3">для учёбы</span>
+      </h2>
+      <p class="t-sub fx fx-fly" style="--d:4">Следующий этап — апробация с&nbsp;учащимися</p>
+      <div class="bot-card fx fx-card" style="--d:5">
+        <img class="bc-ava" src="img/avatar.jpg" alt="">
+        <div class="bc-txt"><b>Школьный помощник ИИ</b><span>@school_qwen_helper_26_bot</span><small>Наведите камеру на&nbsp;QR-код</small></div>
+        <div class="bc-qr"><img src="img/qr.svg" alt="QR-код: t.me/school_qwen_helper_26_bot"></div>
+      </div>
+    </div>
+    <p class="thanks fx fx-fade" style="--d:7">Спасибо за&nbsp;внимание!</p>
+  </section>
+
+  <!-- ===== 13–16. Материалы для вопросов ===== -->
+  <section class="scene" data-mode="appendix" aria-label="Как устроен этот тип бота">
+    <div class="apx">
+      <p class="kicker fx fx-fly" style="--d:0">Материалы для вопросов · 1/5</p>
+      <h2 class="h2 fx fx-fly" style="--d:1">Как устроен этот тип бота</h2>
+      <dl class="tbl">
+        <div class="fx fx-fly" style="--d:2"><dt>Назначение</dt><dd>Информация, учёба и&nbsp;личная организация</dd></div>
+        <div class="fx fx-fly" style="--d:3"><dt>Принцип работы</dt><dd>Гибрид правил и&nbsp;языковой модели</dd></div>
+        <div class="fx fx-fly" style="--d:4"><dt>Общение</dt><dd>Сообщения, команды и&nbsp;кнопки</dd></div>
+        <div class="fx fx-fly" style="--d:5"><dt>Рабочий язык</dt><dd>Русский интерфейс</dd></div>
+      </dl>
+      <p class="note fx fx-up" style="--d:7">Команды используют правила. ИИ формирует объяснения.</p>
+    </div>
+  </section>
+
+  <section class="scene" data-mode="appendix" aria-label="Все команды бота">
+    <div class="apx">
+      <p class="kicker fx fx-fly" style="--d:0">Материалы для вопросов · 2/5</p>
+      <h2 class="h2 fx fx-fly" style="--d:1">Все команды бота</h2>
+      <div class="cmdgrid">
+        <div class="cg fx fx-pop" style="--d:2"><b>Учёба с ИИ</b><code>/ask /explain /steps /practice /formula /reset</code></div>
+        <div class="cg fx fx-pop" style="--d:3"><b>Расписание</b><code>/start /change /today /tomorrow /schedule /week /bell /subject</code></div>
+        <div class="cg fx fx-pop" style="--d:4"><b>Домашние задания</b><code>/hw</code><small>учителю: <code>/addhw /delhw</code></small></div>
+        <div class="cg fx fx-pop" style="--d:5"><b>Напоминания</b><code>/subscribe /unsubscribe /settime /mysubs</code></div>
+        <div class="cg fx fx-pop" style="--d:6"><b>Дела и таймер</b><code>/todo /addtask /done /deltask /focus /stopfocus</code></div>
+        <div class="cg fx fx-pop" style="--d:7"><b>Игра и прогресс</b><code>/quiz /progress</code></div>
+        <div class="cg fx fx-pop" style="--d:8"><b>Досуг</b><code>/joke /fact /word</code></div>
+        <div class="cg fx fx-pop" style="--d:9"><b>История</b><code>/museum /monuments</code></div>
+        <div class="cg fx fx-pop" style="--d:10"><b>Сервис</b><code>/menu /tour /top /info /privacy /delete_me /id /help</code><small>учителю: <code>/stats</code></small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-mode="appendix" aria-label="Что проверяют тесты">
+    <div class="apx">
+      <p class="kicker fx fx-fly" style="--d:0">Материалы для вопросов · 3/5</p>
+      <h2 class="h2 fx fx-fly" style="--d:1">Что проверяют тесты</h2>
+      <dl class="tbl">
+        <div class="fx fx-fly" style="--d:2"><dt>Данные и доступ</dt><dd>Сохранение и&nbsp;доступ только владельцу</dd></div>
+        <div class="fx fx-fly" style="--d:3"><dt>ИИ</dt><dd>Квоты, короткий контекст и&nbsp;обработка сбоя</dd></div>
+        <div class="fx fx-fly" style="--d:4"><dt>События Telegram</dt><dd>Защита от&nbsp;повторных запросов</dd></div>
+        <div class="fx fx-fly" style="--d:5"><dt>Уведомления</dt><dd>Повтор при временной ошибке</dd></div>
+        <div class="fx fx-fly" style="--d:6"><dt>Команды</dt><dd>Обработка опубликованного меню</dd></div>
+      </dl>
+      <p class="note fx fx-up" style="--d:8">Нагрузочные и&nbsp;педагогические испытания — следующий этап</p>
+    </div>
+  </section>
+
+  <section class="scene" data-mode="appendix" aria-label="План апробации">
+    <div class="apx">
+      <p class="kicker fx fx-fly" style="--d:0">Материалы для вопросов · 4/5</p>
+      <h2 class="h2 fx fx-fly" style="--d:1">План апробации с&nbsp;учащимися</h2>
+      <div class="plan">
+        <div class="plan-col fx fx-card" style="--d:2"><p class="evo-tag">Одинаковые задачи</p><p>Расписание, ДЗ и&nbsp;справочная информация</p></div>
+        <div class="plan-col fx fx-card" style="--d:3"><p class="evo-tag">Сравнение способов</p><p>Привычный поиск и&nbsp;использование бота</p></div>
+      </div>
+      <div class="metrics fx fx-fly" style="--d:4"><b>Измерения:</b><span>время</span><span>успешность</span><span>понятность интерфейса</span></div>
+      <p class="note fx fx-up" style="--d:6">Это план исследования. Результаты апробации пока отсутствуют.</p>
+    </div>
+  </section>
+
+  <section class="scene" data-mode="appendix" aria-label="Источники проекта">
+    <div class="apx">
+      <p class="kicker fx fx-fly" style="--d:0">Материалы для вопросов · 5/5</p>
+      <h2 class="h2 fx fx-fly" style="--d:1">Источники проекта</h2>
+      <dl class="tbl tbl-src">
+        <div class="fx fx-fly" style="--d:2"><dt>Исследовательская работа</dt><dd>Текст автора и&nbsp;раннее описание прототипа</dd></div>
+        <div class="fx fx-fly" style="--d:3"><dt>Исходники и проверки</dt><dd><code>src/</code>, <code>migrations/</code>, <code>test/bot.test.js</code></dd></div>
+        <div class="fx fx-fly" style="--d:4"><dt>Telegram</dt><dd>Официальная документация Bot API</dd></div>
+        <div class="fx fx-fly" style="--d:5"><dt>Cloudflare</dt><dd>Workers, база D1, Cron и&nbsp;Workers AI</dd></div>
+        <div class="fx fx-fly" style="--d:6"><dt>Школьный музей</dt><dd>Сайт «Мухавец — маршрут памяти»</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="hud" aria-hidden="true">
+    <span class="hud-n"><b id="hudCur">01</b>/<span id="hudTot">17</span></span>
+    <i class="hud-bar"><i id="hudBar"></i></i>
+  </div>
+
+</div>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
